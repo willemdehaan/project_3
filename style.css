@@ -1,0 +1,62 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Helvetica Neue', sans-serif;
+    background-color: #fdfdfd;
+    color: #222;
+    line-height: 1.6;
+  }
+  
+  /* Headers */
+  header {
+    background: linear-gradient(to right, #2b5876, #4e4376);
+    color: white;
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+  
+  header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  header p {
+    font-size: 1.1rem;
+    max-width: 800px;
+    margin: 0.5rem auto;
+  }
+  
+  /* our names */
+  .team-names {
+    font-size: 0.95rem;
+    color: #e0e0e0;
+    font-style: italic;
+    margin-top: 1rem;
+  }
+  
+  /* layout */
+  main {
+    max-width: 960px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+  }
+  
+  /* sections */
+  h2 {
+    font-size: 1.6rem;
+    color: #444;
+    border-bottom: 2px solid #eee;
+    margin-bottom: 1rem;
+    padding-bottom: 0.25rem;
+  }
+  
+  .section {
+    margin-bottom: 3rem;
+  }
+  
+ 
