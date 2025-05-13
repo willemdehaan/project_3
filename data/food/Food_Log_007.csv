@@ -1,4 +1,4 @@
-﻿date,time_of_day,time_begin,time_end,logged_food,amount,unit,searched_food,calorie,total_carb,dietary_fiber,sugar,protein,total_fat
+﻿date,time,time_begin,time_end,logged_food,amount,unit,searched_food,calorie,total_carb,dietary_fiber,sugar,protein,total_fat
 10/16/2019,13:44,10/16/2019 13:44,14:00,(Costco) Seafood Stuffed Salmon,129,gram,Seafood Stuffed Salmon,201,1.5,0.2,0.2,24,11
 10/16/2019,13:44,10/16/2019 13:44,14:00,(Green Giant) Rice Cauliflower - Plain,58,gram,Riced Cauliflower,15,2.9,1.2,1.1,1.1,0.2
 10/16/2019,13:44,10/16/2019 13:44,14:00,(Dayka and Hackett) Navel Orange,212,gram,Navel Orange,104,27,4.7,18,1.9,0.3

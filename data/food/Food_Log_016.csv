@@ -1,4 +1,4 @@
-﻿date,time_of_day,time_begin,time_end,logged_food,amount,unit,searched_food,calorie,total_carb,dietary_fiber,sugar,protein,total_fat
+﻿date,time,time_begin,time_end,logged_food,amount,unit,searched_food,calorie,total_carb,dietary_fiber,sugar,protein,total_fat
 2/21/2020,6:30,2020-02-21 06:30:00,#N/A,Salmon cakes,2,,,736,58,4.6,3.8,32,42
 2/21/2020,6:30,2020-02-21 06:30:00,,Large coffee with heavy cream,,,,84,2.6,0,2.6,2.4,7
 2/21/2020,8:30,2020-02-21 08:30:00,,Standard breakfast,,,,280,56.5,1,24,8,2.5
