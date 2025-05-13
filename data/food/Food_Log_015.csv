@@ -1,4 +1,4 @@
-﻿date,time_of_day,time_begin,time_end,logged_food,amount,unit,searched_food,calorie,total_carb,dietary_fiber,sugar,protein,total_fat
+﻿date,time,time_begin,time_end,logged_food,amount,unit,searched_food,calorie,total_carb,dietary_fiber,sugar,protein,total_fat
 2/17/2020,10:00,2020-02-17 10:00:00,#N/A,Coffee + skim milk,10,fluid ounce,,35,4.5,0,4.7,3.4,0.1
 2/17/2020,10:09,2020-02-17 10:09:00,10:13,Glucerna snack bar,40,grams,,160,20,3,4,10,5
 2/17/2020,15:50,2020-02-17 15:50:00,15:53,Small pc red velvet cake,,,,368,36,0.3,25,4.2,23

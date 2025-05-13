@@ -1,4 +1,4 @@
-﻿date,time_of_day,time_begin,time_end,logged_food,amount,unit,searched_food,calorie,total_carb,dietary_fiber,sugar,protein,total_fat
+﻿date,time,time_begin,time_end,logged_food,amount,unit,searched_food,calorie,total_carb,dietary_fiber,sugar,protein,total_fat
 12/30/2019,16:30,12/30/2019 16:30,16:32,Ice Cream Sandwich,4.23,fluid ounce,Ice Cream Sandwich,284,45,0,22,5.1,10
 12/30/2019,18:57,12/30/2019 18:57,19:10,Lasagna (mostly vegetables),335,gram,Lasagna,524,30,3.4,9.8,38,28
 12/30/2019,18:57,12/30/2019 18:57,19:08,Red Wine,0.25,cup,Red Wine,50,1.5,0,0.4,0,0
