@@ -59,4 +59,45 @@
     margin-bottom: 3rem;
   }
   
+  .collapsible-box {
+    width: 100%;
+    margin-bottom: 2rem;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(128, 128, 128, 0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .collapsible-btn {
+    width: 100%;
+    background-color: #2b5876;
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: left;
+    border-radius: 10px 10px 0 0;
+  }
+  
+  .collapsible-btn:hover {
+    background-color: #4e4376;
+  }
+  
+  .collapsible-content {
+    padding: 20px;
+    display: none;
+    transition: all 0.3s ease;
+    flex-grow: 1;
+  }
+
+  /* adding space between paragraph */
+  .collapsible-content p {
+    margin-bottom: 1rem;
+  }
+  
+  
  
