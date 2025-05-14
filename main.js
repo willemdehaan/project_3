@@ -191,5 +191,63 @@ function drawHeartRateTrend(data) {
         .text(item.label)
         .attr("font-size", "12px");
     });
+
+    const tooltip = d3.select("#tooltip");
+
+  // Append circles for normal data
+  svg.selectAll(".dot-normal")
+    .data(normalData)
+    .enter()
+    .append("circle")
+    .attr("class", "dot-normal")
+    .attr("cx", d => x(d.time))
+    .attr("cy", d => y(d.mean))
+    .attr("r", 4)
+    .attr("fill", "steelblue")
+    .on("mouseover", (event, d) => {
+      tooltip.transition().duration(200).style("opacity", 0.9);
+      tooltip.html(
+        `<strong>A1C Type:</strong> Normal<br/>
+        <strong>Time:</strong> ${d3.timeFormat("%H:%M")(d.time)}<br/>
+        <strong>Heart Rate:</strong> ${d.mean.toFixed(1)}`
+      )
+      .style("left", (event.pageX + 10) + "px")
+      .style("top", (event.pageY - 28) + "px");
+    })
+    .on("mousemove", (event) => {
+      tooltip.style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 28) + "px");
+    })
+    .on("mouseout", () => {
+      tooltip.transition().duration(300).style("opacity", 0);
+    });
+
+  // Append circles for prediabetes data
+  svg.selectAll(".dot-pre")
+    .data(preData)
+    .enter()
+    .append("circle")
+    .attr("class", "dot-pre")
+    .attr("cx", d => x(d.time))
+    .attr("cy", d => y(d.mean))
+    .attr("r", 4)
+    .attr("fill", "darkorange")
+    .on("mouseover", (event, d) => {
+      tooltip.transition().duration(200).style("opacity", 0.9);
+      tooltip.html(
+        `<strong>A1C Type:</strong> Prediabetes<br/>
+        <strong>Time:</strong> ${d3.timeFormat("%H:%M")(d.time)}<br/>
+        <strong>Heart Rate:</strong> ${d.mean.toFixed(1)}`
+      )
+      .style("left", (event.pageX + 10) + "px")
+      .style("top", (event.pageY - 28) + "px");
+    })
+    .on("mousemove", (event) => {
+      tooltip.style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 28) + "px");
+    })
+    .on("mouseout", () => {
+      tooltip.transition().duration(300).style("opacity", 0);
+    });
   }
 }
