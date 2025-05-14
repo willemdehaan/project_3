@@ -18,6 +18,7 @@ d3.csv("combined_hr.csv", (row) => ({
   time: row.time,
   a1c_type: row.a1c_type,
   participant_id: row.participant_id,
+  gender: row.Gender,
 })).then(drawHeartRateTrend);
 
 function drawHeartRateTrend(data) {
@@ -27,6 +28,7 @@ function drawHeartRateTrend(data) {
   const parseTime = d3.timeParse("%H:%M");
 
   const participantSelect = d3.select("#participant-select");
+  const genderSelect = d3.select("#gender-select");
 
   const participantIds = Array.from(
     new Set(data.map((d) => d.participant_id).filter((id) => id !== "all")),
@@ -35,6 +37,14 @@ function drawHeartRateTrend(data) {
   // Then add sorted numeric participant IDs
   participantIds.forEach((id) => {
     participantSelect.append("option").attr("value", id).text(id);
+  });
+
+  const genders = Array.from(
+    new Set(data.map((d) => d.gender).filter((g) => g)),
+  ).sort();
+
+  genders.forEach((g) => {
+    genderSelect.append("option").attr("value", g).text(g);
   });
 
   // Initial preprocessing
@@ -46,17 +56,45 @@ function drawHeartRateTrend(data) {
     }))
     .filter((d) => d.parsedTime);
 
-  participantSelect.on("change", () =>
-    render(participantSelect.property("value")),
-  );
-  render("all");
+  participantSelect.on("change", () => {
+    const selectedId = participantSelect.property("value");
+    if (selectedId !== "all") {
+      genderSelect.property("disabled", true);
+      genderSelect.property("value", "all");
+    } else {
+      genderSelect.property("disabled", false);
+    }
+    render();
+  });
 
-  function render(selectedId) {
-    const filteredData =
-      selectedId === "all"
-        ? data
-        : data.filter((d) => d.participant_id === selectedId);
+  genderSelect.on("change", () => {
+    const selectedGender = genderSelect.property("value");
+    if (selectedGender !== "all") {
+      participantSelect.property("disabled", true);
+      participantSelect.property("value", "all");
+    } else {
+      participantSelect.property("disabled", false);
+    }
+    render();
+  });
 
+  render();
+
+  function render() {
+    const selectedId = participantSelect.property("value");
+    const selectedGender = genderSelect.property("value");
+
+    let filteredData = data;
+
+    if (selectedId !== "all") {
+      filteredData = filteredData.filter(
+        (d) => d.participant_id === selectedId,
+      );
+    }
+
+    if (selectedGender !== "all") {
+      filteredData = filteredData.filter((d) => d.gender === selectedGender);
+    }
     drawChart(filteredData);
   }
 
@@ -194,70 +232,131 @@ function drawHeartRateTrend(data) {
 
     const tooltip = d3.select("#tooltip");
 
-  // Append circles for normal data
-  svg.selectAll(".dot-normal")
-    .data(normalData)
-    .enter()
-    .append("circle")
-    .attr("class", "dot-normal")
-    .attr("cx", d => x(d.time))
-    .attr("cy", d => y(d.mean))
-    // .attr("r", 4)
-    // .attr("fill", "steelblue")
-    .attr("r", 6)
-    .attr("fill", "transparent")
-    .attr("stroke", "transparent")
-    .attr("pointer-events", "all")
-
-    .on("mouseover", (event, d) => {
-      tooltip.transition().duration(200).style("opacity", 0.9);
-      tooltip.html(
-        `<strong>A1C Type:</strong> Normal<br/>
+    // Append circles for normal data
+    svg
+      .selectAll(".dot-normal")
+      .data(normalData)
+      .enter()
+      .append("circle")
+      .attr("class", "dot-normal")
+      .attr("cx", (d) => x(d.time))
+      .attr("cy", (d) => y(d.mean))
+      .attr("r", 6)
+      .attr("fill", "transparent")
+      .attr("stroke", "transparent")
+      .attr("pointer-events", "all")
+      .on("mouseover", (event, d) => {
+        tooltip.transition().duration(200).style("opacity", 0.9);
+        tooltip
+          .html(
+            `<strong>A1C Type:</strong> Normal<br/>
         <strong>Time:</strong> ${d3.timeFormat("%H:%M")(d.time)}<br/>
-        <strong>Heart Rate:</strong> ${d.mean.toFixed(1)}`
-      )
-      .style("left", (event.pageX + 10) + "px")
-      .style("top", (event.pageY - 28) + "px");
-    })
-    .on("mousemove", (event) => {
-      tooltip.style("left", (event.pageX + 10) + "px")
-            .style("top", (event.pageY - 28) + "px");
-    })
-    .on("mouseout", () => {
-      tooltip.transition().duration(300).style("opacity", 0);
+        <strong>Heart Rate:</strong> ${d.mean.toFixed(1)}`,
+          )
+          .style("left", event.pageX + 10 + "px")
+          .style("top", event.pageY - 28 + "px");
+      })
+      .on("mousemove", (event) => {
+        tooltip
+          .style("left", event.pageX + 10 + "px")
+          .style("top", event.pageY - 28 + "px");
+      })
+      .on("mouseout", () => {
+        tooltip.transition().duration(300).style("opacity", 0);
+      });
+
+    // Append circles for prediabetes data
+    svg
+      .selectAll(".dot-pre")
+      .data(preData)
+      .enter()
+      .append("circle")
+      .attr("class", "dot-pre")
+      .attr("cx", (d) => x(d.time))
+      .attr("cy", (d) => y(d.mean))
+      .attr("r", 6)
+      .attr("fill", "transparent")
+      .attr("stroke", "transparent")
+      .attr("pointer-events", "all")
+      .on("mouseover", (event, d) => {
+        tooltip.transition().duration(200).style("opacity", 0.9);
+        tooltip
+          .html(
+            `<strong>A1C Type:</strong> Prediabetes<br/>
+        <strong>Time:</strong> ${d3.timeFormat("%H:%M")(d.time)}<br/>
+        <strong>Heart Rate:</strong> ${d.mean.toFixed(1)}`,
+          )
+          .style("left", event.pageX + 10 + "px")
+          .style("top", event.pageY - 28 + "px");
+      })
+      .on("mousemove", (event) => {
+        tooltip
+          .style("left", event.pageX + 10 + "px")
+          .style("top", event.pageY - 28 + "px");
+      })
+      .on("mouseout", () => {
+        tooltip.transition().duration(300).style("opacity", 0);
+      });
+
+    // Create the brush
+    const brush = d3
+      .brushX() // Brush for horizontal selection
+      .extent([
+        [margin.left, margin.top],
+        [width - margin.right, height - margin.bottom],
+      ]); // Define the extent (brushable area)
+
+    // Define the zoom behavior
+    const zoom = d3
+      .zoom()
+      .scaleExtent([1, 10]) // Set zoom limits
+      .on("zoom", zoomed); // Attach the zoom event handler
+
+    // Attach the brush to the container
+    svg.append("g").attr("class", "brush").call(brush);
+
+    // Handle brush events
+    brush.on("start", () => {
+      // Disable pan or other behaviors during the brush interaction
     });
 
-  // Append circles for prediabetes data
-  svg.selectAll(".dot-pre")
-    .data(preData)
-    .enter()
-    .append("circle")
-    .attr("class", "dot-pre")
-    .attr("cx", d => x(d.time))
-    .attr("cy", d => y(d.mean))
-    // .attr("r", 4)
-    // .attr("fill", "darkorange")
-    .attr("r", 6)
-    .attr("fill", "transparent")
-    .attr("stroke", "transparent")
-    .attr("pointer-events", "all")
-
-    .on("mouseover", (event, d) => {
-      tooltip.transition().duration(200).style("opacity", 0.9);
-      tooltip.html(
-        `<strong>A1C Type:</strong> Prediabetes<br/>
-        <strong>Time:</strong> ${d3.timeFormat("%H:%M")(d.time)}<br/>
-        <strong>Heart Rate:</strong> ${d.mean.toFixed(1)}`
-      )
-      .style("left", (event.pageX + 10) + "px")
-      .style("top", (event.pageY - 28) + "px");
-    })
-    .on("mousemove", (event) => {
-      tooltip.style("left", (event.pageX + 10) + "px")
-            .style("top", (event.pageY - 28) + "px");
-    })
-    .on("mouseout", () => {
-      tooltip.transition().duration(300).style("opacity", 0);
+    brush.on("brush", () => {
+      // Update chart appearance during brushing
+      // (Optional) Highlight the brush area, etc.
     });
+
+    brush.on("end", (event) => {
+      if (!event.selection) return; // No selection (nothing dragged)
+
+      // Get the brush selection (the range that was selected)
+      const [x0, x1] = event.selection;
+
+      // Update the zoom domain based on the brush extent
+      const newDomain = [x.invert(x0), x.invert(x1)];
+      x.domain(newDomain);
+
+      // Re-render the chart with the new domain
+      render(); // Call render to update the chart and axes
+
+      // Reset the brush position after the action (optional)
+      svg.select(".brush").call(brush.move, null); // Reset brush position
+    });
+
+    // Zoom handler
+    function zoomed(event) {
+      // Apply the zoom transform (scaling and translation)
+      const transform = event.transform;
+
+      // Update the x-scale with the current zoom transform
+      x.range(
+        [margin.left, width - margin.right].map((d) => transform.applyX(d)),
+      );
+
+      // Update the chart and axes
+      render();
+    }
+
+    // Attach the zoom behavior to the chart
+    svg.call(zoom);
   }
 }
