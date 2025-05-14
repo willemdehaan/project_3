@@ -205,15 +205,40 @@ function drawHeartRateTrend(data) {
       .attr("transform", `translate(${margin.left},0)`)
       .call(d3.axisLeft(y));
 
+    // Add x-axis title
+    // Calculate available width excluding legend width (160px)
+    const legendWidth = 160;
+    const availableWidth = width - legendWidth;
+
+    svg
+      .append("text")
+      .attr(
+        "transform",
+        `translate(${availableWidth / 2},${height - margin.bottom + 35})`, // Adjusted padding for label
+      )
+      .style("text-anchor", "middle")
+      .style("font-size", "14px")
+      .text("Time of Day");
+
+    // Add y-axis title
+    svg
+      .append("text")
+      .attr("transform", `rotate(-90)`)
+      .attr("x", -height / 2)
+      .attr("y", margin.left - 35)
+      .style("text-anchor", "middle")
+      .style("font-size", "14px")
+      .text("Heart Rate (bpm)");
+
     const legend = svg
       .append("g")
       .attr("transform", `translate(${width - 140},${margin.top})`);
 
     const items = [
-      { color: "lightblue", label: "Normal Range", opacity: 0.4 },
-      { color: "steelblue", label: "Normal Mean", opacity: 1 },
-      { color: "lightsalmon", label: "Prediabetes Range", opacity: 0.4 },
-      { color: "darkorange", label: "Prediabetes Mean", opacity: 1 },
+      { color: "lightblue", label: "Non-diabetic Range", opacity: 0.4 },
+      { color: "steelblue", label: "Non-diabetic Mean", opacity: 1 },
+      { color: "lightsalmon", label: "Pre-diabetec Range", opacity: 0.4 },
+      { color: "darkorange", label: "Pre-diabetec Mean", opacity: 1 },
     ];
 
     items.forEach((item, i) => {
@@ -297,66 +322,5 @@ function drawHeartRateTrend(data) {
       .on("mouseout", () => {
         tooltip.transition().duration(300).style("opacity", 0);
       });
-
-    // Create the brush
-    const brush = d3
-      .brushX() // Brush for horizontal selection
-      .extent([
-        [margin.left, margin.top],
-        [width - margin.right, height - margin.bottom],
-      ]); // Define the extent (brushable area)
-
-    // Define the zoom behavior
-    const zoom = d3
-      .zoom()
-      .scaleExtent([1, 10]) // Set zoom limits
-      .on("zoom", zoomed); // Attach the zoom event handler
-
-    // Attach the brush to the container
-    svg.append("g").attr("class", "brush").call(brush);
-
-    // Handle brush events
-    brush.on("start", () => {
-      // Disable pan or other behaviors during the brush interaction
-    });
-
-    brush.on("brush", () => {
-      // Update chart appearance during brushing
-      // (Optional) Highlight the brush area, etc.
-    });
-
-    brush.on("end", (event) => {
-      if (!event.selection) return; // No selection (nothing dragged)
-
-      // Get the brush selection (the range that was selected)
-      const [x0, x1] = event.selection;
-
-      // Update the zoom domain based on the brush extent
-      const newDomain = [x.invert(x0), x.invert(x1)];
-      x.domain(newDomain);
-
-      // Re-render the chart with the new domain
-      render(); // Call render to update the chart and axes
-
-      // Reset the brush position after the action (optional)
-      svg.select(".brush").call(brush.move, null); // Reset brush position
-    });
-
-    // Zoom handler
-    function zoomed(event) {
-      // Apply the zoom transform (scaling and translation)
-      const transform = event.transform;
-
-      // Update the x-scale with the current zoom transform
-      x.range(
-        [margin.left, width - margin.right].map((d) => transform.applyX(d)),
-      );
-
-      // Update the chart and axes
-      render();
-    }
-
-    // Attach the zoom behavior to the chart
-    svg.call(zoom);
   }
 }
