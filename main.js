@@ -237,8 +237,8 @@ function drawHeartRateTrend(data) {
     const items = [
       { color: "lightblue", label: "Non-diabetic Range", opacity: 0.4 },
       { color: "steelblue", label: "Non-diabetic Mean", opacity: 1 },
-      { color: "lightsalmon", label: "Pre-diabetec Range", opacity: 0.4 },
-      { color: "darkorange", label: "Pre-diabetec Mean", opacity: 1 },
+      { color: "lightsalmon", label: "Prediabetec Range", opacity: 0.4 },
+      { color: "darkorange", label: "Prediabetec Mean", opacity: 1 },
     ];
 
     items.forEach((item, i) => {
