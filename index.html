@@ -21,13 +21,15 @@
       </section>
 
       <!-- static d3 viz  -->
-        <h2>Heart Rate vs Sugar Intake by Hour and A1C Type</h2>
-        <div id="chart-a1c"></div>
-
-        <h2>Overall Hourly Heart Rate and Sugar Intake</h2>
-        <div id="chart-overall"></div>
-
+        
         <h2>Daily Heart Rate Trend for Normal versus Prediabetic Participants</h2>
+        <div style="margin-bottom: 10px;">
+          <label for="participant-select">Participant:</label>
+          <select id="participant-select">
+            <option value="all">All</option>
+            <!-- Will add options dynamically -->
+          </select>
+        </div>
         <div id="heartrate-a1c"></div>
       <!-- ends here -->
   
