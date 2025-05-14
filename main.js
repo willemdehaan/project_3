@@ -101,8 +101,6 @@ function drawHeartRateTrend(data) {
   function drawChart(filteredData) {
     d3.select("#heartrate-a1c").selectAll("svg").remove(); // clear old chart
 
-
-
     const grouped = d3.rollup(
       filteredData,
       (v) => {
@@ -151,14 +149,14 @@ function drawHeartRateTrend(data) {
       .attr("width", width)
       .attr("height", height);
 
-//       svg.append("defs").html(`
-//   <marker id="arrow-start" markerWidth="6" markerHeight="6" refX="0" refY="3" orient="auto">
-//     <path d="M6,0 L0,3 L6,6" fill="gray" />
-//   </marker>
-//   <marker id="arrow-end" markerWidth="6" markerHeight="6" refX="6" refY="3" orient="auto">
-//     <path d="M0,0 L6,3 L0,6" fill="gray" />
-//   </marker>
-// `);
+    //       svg.append("defs").html(`
+    //   <marker id="arrow-start" markerWidth="6" markerHeight="6" refX="0" refY="3" orient="auto">
+    //     <path d="M6,0 L0,3 L6,6" fill="gray" />
+    //   </marker>
+    //   <marker id="arrow-end" markerWidth="6" markerHeight="6" refX="6" refY="3" orient="auto">
+    //     <path d="M0,0 L6,3 L0,6" fill="gray" />
+    //   </marker>
+    // `);
 
     const area = d3
       .area()
@@ -267,44 +265,49 @@ function drawHeartRateTrend(data) {
     });
 
     if (participantSelect.property("value") === "all") {
-  const startTime = parseTime("04:00");
-  const endTime = parseTime("08:00");
-  const midTime = new Date((startTime.getTime() + endTime.getTime()) / 2);
+      const startTime = parseTime("04:00");
+      const endTime = parseTime("08:00");
+      const midTime = new Date((startTime.getTime() + endTime.getTime()) / 2);
 
-  const xStart = x(startTime);
-  const xEnd = x(endTime);
-  const yTop = y.range()[1]; // top of the plot area
-  const yBottom = y.range()[0]; // bottom of the plot area
+      const xStart = x(startTime);
+      const xEnd = x(endTime);
+      const yTop = y.range()[1]; // top of the plot area
+      const yBottom = y.range()[0]; // bottom of the plot area
 
-  // Draw vertical dashed line at 4 a.m.
-  svg.append("line")
-    .attr("x1", xStart)
-    .attr("x2", xStart)
-    .attr("y1", yTop)
-    .attr("y2", yBottom)
-    .attr("stroke", "gray")
-    .attr("stroke-width", 1)
-    .attr("stroke-dasharray", "4,4");
+      // Draw vertical dashed line at 4 a.m.
+      svg
+        .append("line")
+        .attr("x1", xStart)
+        .attr("x2", xStart)
+        .attr("y1", yTop)
+        .attr("y2", yBottom)
+        .attr("stroke", "gray")
+        .attr("stroke-width", 1)
+        .attr("stroke-dasharray", "4,4");
 
-  // Draw vertical dashed line at 8 a.m.
-  svg.append("line")
-    .attr("x1", xEnd)
-    .attr("x2", xEnd)
-    .attr("y1", yTop)
-    .attr("y2", yBottom)
-    .attr("stroke", "gray")
-    .attr("stroke-width", 1)
-    .attr("stroke-dasharray", "4,4");
+      // Draw vertical dashed line at 8 a.m.
+      svg
+        .append("line")
+        .attr("x1", xEnd)
+        .attr("x2", xEnd)
+        .attr("y1", yTop)
+        .attr("y2", yBottom)
+        .attr("stroke", "gray")
+        .attr("stroke-width", 1)
+        .attr("stroke-dasharray", "4,4");
 
-  // Add annotation text above the chart
-  svg.append("text")
-    .attr("x", x(midTime))
-    .attr("y", margin.top - 10)
-    .attr("text-anchor", "middle")
-    .attr("font-size", "12px")
-    .attr("fill", "gray")
-    .text("Elevated HR from 4–8am for people with diabetes");
-}
+      // Add annotation text above the chart
+      svg
+        .append("text")
+        .attr("x", x(midTime))
+        .attr("y", margin.top - 10)
+        .attr("text-anchor", "middle")
+        .attr("font-size", "10px")
+        .attr("fill", "gray")
+        .text(
+          "Dawn Phenomenon: Elevated HR from 4–8am for pre-diabetic participants. ",
+        );
+    }
 
     const tooltip = d3.select("#tooltip");
 
@@ -373,7 +376,5 @@ function drawHeartRateTrend(data) {
       .on("mouseout", () => {
         tooltip.transition().duration(300).style("opacity", 0);
       });
-
-    }
-
+  }
 }

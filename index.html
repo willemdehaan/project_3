@@ -1,7 +1,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>How Does Sugar Intake Influence Heart Rate?</title>
+    <title>Heartbeat Signals: Detecting Diabetes Risk Through Wearable Data</title>
     <link rel="stylesheet" href="style.css" />
     <script src="https://d3js.org/d3.v7.min.js"></script>
   </head>
@@ -16,85 +16,82 @@
       <section class="section" id="intro">
         <h2>Overview</h2>
         <p>
-          The BIG IDEA study sought to examine if wearable device data, such as the data stored from your Apple Watch, could be used to determine whether an individual was at risk for diabetes. Upon analyzing the avaible data from the study, we wanted to determine whether daily heart rate trends can be used to differentiate between nondiabetic and prediabetic participants. Using the interactive visuzalizations below explore for yourself to see the different shapes in daily heart rate trends, and use your findings to see if you can correctly label individual participants.
-
+          The BIG IDEA study sought to examine if wearable device data, such as the data stored from your Apple Watch, could be used to determine whether an individual was at risk for diabetes. Upon analyzing the avaible data from the study, we wanted to determine whether daily heart rate trends can be used to differentiate between nondiabetic and prediabetic participants. Using the interactive visuzalizations below explore for yourself to see the different shapes in daily heart rate trends, and use your findings to see if you can correctly label individual participants. 
+        </p>
+        <p> The dawn phenomenon, which typically occurs between 4 a.m. and 8 a.m., primarily affects individuals with diabetes and is characterized by a surge in hormones such as cortisol and growth hormone. This hormonal rise increases blood glucose levels and stimulates the sympathetic nervous system, leading to elevated heart rate and blood pressure. Observe if you notice this within individual participant data!
         </p>
       </section>
 
-      <!-- static d3 viz  -->
-        
-        <h2>Daily Heart Rate Trend for Normal versus Prediabetic Participants</h2>
-        <div style="margin-bottom: 10px;">
-          <label for="participant-select">Participant:</label>
-          <select id="participant-select">
-            <option value="all">All</option>
-            <!-- Will add options dynamically -->
-          </select>
-        
-          <label for="gender-select" style="margin-left: 20px;">Gender:</label>
-          <select id="gender-select">
-            <option value="all">All</option>
-          </select>
-        </div>
-        <!-- <button id="resetZoom" style="margin-bottom: 10px;">Reset Zoom</button> -->
+     <!-- static d3 viz  -->
 
-        <div id="heartrate-a1c"></div>
-      <!-- ends here -->
+     <h2>Tracing the Curve: Heart Rate Patterns by Diabetes Risk Indicate the Dawn Phenomenon is Very Real</h2>
+     <p class="chart-subtitle" style="margin-bottom: 20px;">
+       Compare how heart rate patterns differ between non-diabetic and prediabetic individuals — and explore the potential of wearable data to uncover hidden health risks.
+     </p>
+     
+
+<div style="margin-bottom: 10px;">
+  <label for="participant-select">Participant:</label>
+  <select id="participant-select">
+    <option value="all">All</option>
+    <!-- Will add options dynamically -->
+  </select>
+
+  <label for="gender-select" style="margin-left: 20px;">Gender:</label>
+  <select id="gender-select">
+    <option value="all">All</option>
+  </select>
+</div>
+
+<div id="heartrate-a1c"></div>
+<!-- ends here -->
+
   
       <section class="section" id="writeup">
         <h2>Project Details</h2>
-
-        <div class="collapsible-box"></div>
+      
+        <div class="collapsible-box">
           <button class="collapsible-btn">Data Aggregation ▾</button>
           <div class="collapsible-content">
             <p>
-              fill
-            </p>
-            <p> fill </p>
-              <p>
-fill
+              We made use of all 16 participants’ heart rate data as well as their demographic data from the vast BIG IDEA study dataset. After assigning each separate participant's .csv file a participant id and transforming the time to be in “hour: minute” format, the 16 dataframes were concatenated into a single expansive dataframe. Following this, we grouped by participant_id and time, aggregating by the mean heart rate at each time point per participant. The next step was creating a diabetes risk label, using the standard medical benchmark of a 5.7% HbA1c level. Values are labeled 'Non-prediabetic' if HbA1c < 5.7, and 'Prediabetic' otherwise. The last step in creating the data we used to plot was to add in the demographics for each participant: specifically, gender and the diabetes risk label we created.
             </p>
           </div>
         </div>
-  
+      
         <div class="collapsible-box">
           <button class="collapsible-btn">Design Rationale ▾</button>
           <div class="collapsible-content">
             <p>
-              For this visualization, we wanted to explore which data pulled from wearable devices could possibly be used to differentiate between non-diabetic and pre-diabtetic participants. We also wanted to shed light on how gender affected the daily heart rate trend, to properly account for any effect it may have when differentiating individuals. We chose to represent heart rate over time using a line chart because it's effective for showing continuous, time-based patterns and fluctuations. We used blue and orange to differentiate groups as they provide proper contrast and respect colorblind individuals. This encoding helps viewers visually trace how heart rate changes shape when analyzing different populations.
-
+              For this visualization, we wanted to explore which data pulled from wearable devices could be used to differentiate between non-diabetic and pre-diabetic participants. We also wanted to shed light on how gender affected the daily heart rate trend, to properly account for any effect it may have when differentiating individuals. We chose to represent heart rate over time using a line chart because it's effective for showing continuous, time-based patterns and fluctuations. We used blue and orange to differentiate groups as they provide proper contrast and respect colorblind individuals. This encoding helps viewers visually trace how heart rate changes shape when analyzing different populations. We made use of various encodings on magnitude channels, such as position on a common scale (y-axis representing heart rate level), area (encompassed with the variability of the data behind the main line graph), and color saturation (in making certain features of the graph more opaque than others). Although time and motion are separate, there is a continuous aspect to our graph that mimics this identity channel, and different hues were utilized as well.
             </p>
             <p>
-              We added interactive filters for gender, HbA1C category (Non-prediabetic vs Prediabetic), and individual participants so users can explore trends across different demographics or zoom into specific subjects. We also incorporated tooltips that display detailed information such as heart rate and at time, to provide context at specific points.            </p>
+              We added interactive filters for gender, HbA1C category (Non-prediabetic vs Prediabetic), and individual participants so users can explore trends across different demographics or zoom into specific subjects. We also incorporated tooltips that display detailed information, such as heart rate, and at times, to provide context at specific points. Additionally, we included helpful annotation marks that we wanted our viewers to pick up on, specifically the dawn phenomenon. Providing the option to filter by gender or participant but not both, due to creating filters that would result in a blank plot as each participant only has one gender listed, was done intentionally to create less confusion for our viewers and ensure the filters they selected always resulted in a filled plot.
+            </p>
             <p>
               We considered using scatterplots, bar charts, and heatmaps but found them less effective at showing time-based trends and subtle fluctuations. The simplicity of the line chart, combined with interactivity, made it the most intuitive and compelling choice.
-
             </p>
           </div>
         </div>
-  
+      
         <div class="collapsible-box">
           <button class="collapsible-btn">Development Process ▾</button>
           <div class="collapsible-content">
             <p>
-              We began by exploring the BIG IDEAs Lab dataset, which included a large number of CSV files per participant. The data was high-frequency and required
-              significant cleaning and merging to narrow down to a clear trend.
-              We initially developed static visualizations to understand the data structure before implementing interactivity.
+              We began by exploring the BIG IDEAs Lab dataset, which included a large number of CSV files per participant. The data was high-frequency and required significant cleaning and merging to narrow down to a clear trend. We initially developed static visualizations to understand the data structure before implementing interactivity.
             </p>
             <p>
-              Our team of four split up tasks: Tejas and Willem focused on <strong>data preprocessing and merging</strong>, Stuti and Prithvi focused on <strong>D3.js static visualisation development</strong>,
-              and on <strong>HTML/CSS styling and deployment</strong>. We all collaborated together and worked on the final <strong>D3.js interactive visualisation development</strong>.
+              Our team of four split up tasks: Tejas and Willem focused on data preprocessing and merging, Stuti and Prithvi focused on D3.js static visualisation development, and on HTML/CSS styling and deployment. We all collaborated together and worked on the final D3.js interactive visualisation development.
             </p>
             <p>
-              In total, we estimate we spent <strong> 10-12 hours </strong> on this project. The most time-consuming aspects were <strong> implementing our static visualizations in D3 and transforming them to be interactive. Additionally, settling on a compelling question to tackle with our visualization required a lot of brainstorming. </strong>
+              In total, we estimate we spent 10–12 hours on this project. The most time-consuming aspects were implementing our static visualizations in D3 and transforming them to be interactive. Additionally, settling on a compelling question to tackle with our visualization required a lot of brainstorming.
             </p>
           </div>
         </div>
-
+      
         <div id="tooltip" style="position: absolute; opacity: 0; background: white; border: 1px solid #ccc; padding: 6px; font-size: 12px; pointer-events: none; border-radius: 4px;"></div>
-
-  
       </section>
+      
     </main>
   
     <script type = "module", src="main.js"></script>
