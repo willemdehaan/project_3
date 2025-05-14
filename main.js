@@ -202,8 +202,13 @@ function drawHeartRateTrend(data) {
     .attr("class", "dot-normal")
     .attr("cx", d => x(d.time))
     .attr("cy", d => y(d.mean))
-    .attr("r", 4)
-    .attr("fill", "steelblue")
+    // .attr("r", 4)
+    // .attr("fill", "steelblue")
+    .attr("r", 6)
+    .attr("fill", "transparent")
+    .attr("stroke", "transparent")
+    .attr("pointer-events", "all")
+
     .on("mouseover", (event, d) => {
       tooltip.transition().duration(200).style("opacity", 0.9);
       tooltip.html(
@@ -230,8 +235,13 @@ function drawHeartRateTrend(data) {
     .attr("class", "dot-pre")
     .attr("cx", d => x(d.time))
     .attr("cy", d => y(d.mean))
-    .attr("r", 4)
-    .attr("fill", "darkorange")
+    // .attr("r", 4)
+    // .attr("fill", "darkorange")
+    .attr("r", 6)
+    .attr("fill", "transparent")
+    .attr("stroke", "transparent")
+    .attr("pointer-events", "all")
+
     .on("mouseover", (event, d) => {
       tooltip.transition().duration(200).style("opacity", 0.9);
       tooltip.html(
